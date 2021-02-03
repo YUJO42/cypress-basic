@@ -14,14 +14,14 @@ const increaseValue = () => {
   if ($countDisplay.value >= 12) {
     return;
   }
-  $countDisplay.value = Number($countDisplay.value) + 1;
+  $countDisplay.value = String(Number($countDisplay.value) + 1);
 };
 
 const decreaseValue = () => {
   if ($countDisplay.value <= 8) {
     return;
   }
-  $countDisplay.value = Number($countDisplay.value) - 1;
+  $countDisplay.value = String(Number($countDisplay.value) - 1);
 };
 
 $plusButton.addEventListener("click", increaseValue);

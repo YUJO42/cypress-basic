@@ -10,29 +10,34 @@ describe("ui-counter", () => {
   });
 
   it("+ 버튼 클릭시 1 증가한다.", () => {
-    // value 클래스를 가진 요소의 텍스트가 10
-    const prevInputValue = cy.get(".count-display");
+    cy.get(".count-display").then(($input) => {
+      const prevInputValue = Number($input.val());
 
-    // btn-inc 클래스를 가진 요소를 클릭
-    cy.get(".plus-button").click();
-    cy.get(".count-display").should("have.value", +prevInputValue + 1);
+      cy.get(".plus-button").click();
+      cy.get(".count-display").should("have.value", prevInputValue + 1);
+    });
   });
 
-  it("- 버튼 클릭시 1 증가한다.", () => {
-    // value 클래스를 가진 요소의 텍스트가 10
-    const prevInputValue = cy.get(".count-display");
+  it("- 버튼 클릭시 1 감소한다.", () => {
+    cy.get(".count-display").then(($input) => {
+      const prevInputValue = Number($input.val());
 
-    // btn-inc 클래스를 가진 요소를 클릭
-    cy.get(".minus-button").click();
-    cy.get(".count-display").should("have.value", +prevInputValue - 1);
+      cy.get(".minus-button").click();
+      cy.get(".count-display").should("have.value", prevInputValue - 1);
+    });
   });
 
   it("count max값이 12이다.", () => {
-    const prevInputValue = cy.get(".count-display");
-
-    // btn-inc 클래스를 가진 요소를 클릭
-    cy.get(".minus-button").click();
-    cy.get(".count-display").should("have.value.of.at.most", 13);
+    cy.get(".count-display").then(($input) => {
+      cy.get(".plus-button").click();
+      cy.get(".plus-button").click();
+      cy.get(".plus-button").click();
+      cy.get(".plus-button").click();
+      cy.get(".plus-button").click();
+      cy.get(".plus-button").click();
+      cy.get(".plus-button").click();
+      cy.get(".count-display").should("have.value.", 12);
+    });
   });
 
   it("count min값이 8이다.", () => {
