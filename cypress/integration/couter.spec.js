@@ -1,11 +1,9 @@
 describe("ui-counter", () => {
   beforeEach(() => {
-    // 페이지 접속. 띄워진 서버 port를 작성해주세요.
     cy.visit("http://localhost:5500/");
   });
 
   it("생성시 버튼과 초기값(10)을 렌더링 한다", () => {
-    // count-display 클래스를 가진 요소의 텍스트가 10
     cy.get(".count-display").should("have.value", "10");
   });
 
@@ -28,23 +26,18 @@ describe("ui-counter", () => {
   });
 
   it("count max값이 12이다.", () => {
-    cy.get(".count-display").then(($input) => {
+    for (let i = 0; i < 10; i++) {
       cy.get(".plus-button").click();
-      cy.get(".plus-button").click();
-      cy.get(".plus-button").click();
-      cy.get(".plus-button").click();
-      cy.get(".plus-button").click();
-      cy.get(".plus-button").click();
-      cy.get(".plus-button").click();
-      cy.get(".count-display").should("have.value.", 12);
-    });
+    }
+
+    cy.get(".count-display").should("have.value", "12");
   });
 
   it("count min값이 8이다.", () => {
-    const prevInputValue = cy.get(".count-display");
+    for (let i = 0; i < 10; i++) {
+      cy.get(".minus-button").click();
+    }
 
-    // btn-inc 클래스를 가진 요소를 클릭
-    cy.get(".minus-button").click();
-    cy.get(".count-display").should("have.value.of.at.least", 8);
+    cy.get(".count-display").should("have.value.", "8");
   });
 });
