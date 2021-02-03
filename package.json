@@ -5,7 +5,7 @@
   "repository": "https://imakerjun@github.com/imakerjun/cypress-basic.git",
   "author": "im1 <im1@woowahan.com>",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "cypress": "^6.2.1"
   }
 }
