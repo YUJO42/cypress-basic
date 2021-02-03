@@ -11,32 +11,46 @@ export default function Counter({ $app }) {
         </div>`;
   };
 
-  const initEvent = () => {
-    const $plusButton = document.querySelector(".plus-button");
-    const $minusButton = document.querySelector(".minus-button");
-    const $countDisplay = document.querySelector(".count-display");
+  const UPPER_LIMIT = 12;
+  const LOWER_LIMIT = 8;
 
-    const increaseValue = () => {
-      if ($countDisplay.value >= 12) {
-        return;
-      }
-      $countDisplay.value = String(Number($countDisplay.value) + 1);
-    };
+  const isNoMoreThan = (value, upperLimit) => {
+    if (!upperLimit) {
+      upperLimit = UPPER_LIMIT;
+    }
+    return value >= upperLimit;
+  };
 
-    const decreaseValue = () => {
-      if ($countDisplay.value <= 8) {
-        return;
-      }
-      $countDisplay.value = String(Number($countDisplay.value) - 1);
-    };
+  const isNoLessThan = (value, lowerLimit) => {
+    if (!lowerLimit) {
+      lowerLimit = LOWER_LIMIT;
+    }
+    return value <= lowerLimit;
+  };
 
-    $plusButton.addEventListener("click", increaseValue);
-    $minusButton.addEventListener("click", decreaseValue);
+  const applyDiff = (elem, diff, limitCondition, limit) => {
+    if (limitCondition(elem.value, limit)) {
+      return;
+    }
+    elem.value = +elem.value + diff;
+  };
+
+  const handleCounter = () => {
+    const $plusButton = document.querySelector('.plus-button');
+    const $minusButton = document.querySelector('.minus-button');
+    const $countDisplay = document.querySelector('.count-display');
+
+    $plusButton.addEventListener('click', (e) => {
+      applyDiff($countDisplay, +1, isNoMoreThan, UPPER_LIMIT);
+    });
+    $minusButton.addEventListener('click', (e) => {
+      applyDiff($countDisplay, -1, isNoLessThan, LOWER_LIMIT);
+    });
   };
 
   const init = () => {
     render();
-    initEvent();
+    handleCounter();
   };
 
   init();
